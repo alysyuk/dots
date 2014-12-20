@@ -1,0 +1,1 @@
+<p>The invitation to play a game was declined by <strong>{{userName}}</strong></p>

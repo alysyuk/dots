@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>dots</title>
+
+    <!-- styles -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
+  </head>
+  <body>
+    <div>
+    </div>
+    <script type="text/javascript" src="javascripts/jquery.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="javascripts/api.js"></script>
+    <script type="text/javascript" src="javascripts/mustache.js"></script>
+    <script type="text/javascript" src="javascripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="javascripts/templateHandler.js"></script>
+    <script type="text/javascript" src="javascripts/app.js"></script>
+
+    <div class="container">
+
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">The dots</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row" id="view">
+      </div>
+
+      <hr/>
+
+      <footer>
+        <p>&copy; Andrey Lysyuk 2014</p>
+      </footer>
+
+    </div> <!-- /container -->
+    <!-- Modal -->
+    <div id="status_box" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="status_box" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="status_box_header">Modal header</h3>
+      </div>
+      <div class="modal-body">
+        <p id="status_box_body"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="invite_box" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="invite_box" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="invite_box_header">Modal header</h3>
+      </div>
+      <div class="modal-body">
+        <p id="invite_box_body"></p>
+      </div>
+      <div class="modal-footer">
+        <button id="invite_box_accept" class="btn" data-dismiss="modal" aria-hidden="true">Accept</button>
+        <button id="invite_box_decline" class="btn" data-dismiss="modal" aria-hidden="true">Decline</button>
+      </div>
+    </div>
+  </body>
+</html>

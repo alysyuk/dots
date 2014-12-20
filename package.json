@@ -1,0 +1,31 @@
+{
+  "name": "dots",
+  "version": "0.0.1",
+  "description": "A multiplayer game 'The dots'",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alysyuk/dots.git"
+  },
+  "keywords": [
+    "dots",
+    "game",
+    "multiplayer"
+  ],
+  "dependencies": {
+    "cookie": "0.0.5",
+    "express": "^3.0.4",
+    "mongodb": "^1.2.4",
+    "socket.io": "^0.9.13"
+  },
+  "devDependencies": {
+    "nodeunit": "0.7.4"
+  },
+  "author": "Andrey Lysyuk",
+  "license": "BSD",
+  "readmeFilename": "README.md"
+}
