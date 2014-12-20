@@ -1,4 +1,7 @@
 var express = require('express'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    cookieSession = require('cookie-session'),
     MongoClient = require('mongodb').MongoClient,
     format = require('util').format,
     app = express(),
@@ -29,20 +32,19 @@ var sessionStore = new express.session.MemoryStore();
  * Set up the environment for the application
  */
 var initialize = function (callback) {
-    /**
-     * configure express
-     */
-    app.configure('development', function () {
-        app.use(express.bodyParser());
-        app.use(express.cookieParser());
-        app.use(express.static(__dirname + '/public'));
-        app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
-        app.use(express.session({
+    // log every request to the console
+    app.use(express.logger('dev'))
+       // have the ability to pull information from html in POST
+       .use(bodyParser())
+       .use(cookieParser())
+       // set the static files location /public/img will be /img for users
+       .use(express.static(__dirname + '/public'))
+       .use(express.errorHandler({dumpExceptions: true, showStack: true}))
+       .use(cookieSession({
             key: 'sid',
             secret: SESSION_SECRET,
             store: sessionStore
-        }));
-    });
+    }));
 
     /**
      * Capture the session id and make it available

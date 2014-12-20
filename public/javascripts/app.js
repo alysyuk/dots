@@ -317,7 +317,6 @@ var setupBoardGame = function (applicationState, api, templateHandler, game) {
 
         // For each cell create and add the handler
         for (var j = 0; j < cells.length; j++) {
-//      debugger;
             $("#" + cells[j].id).click(gameBoardCellHandler(applicationState, api, templateHandler, game));
         }
     }
@@ -360,7 +359,6 @@ var chatHandler = function (applicationState, api, templateHandler, game) {
  */
 var gameBoardCellHandler = function (applicationState, api, templateHandler, game) {
     return function () {
-        debugger;
         // Split up the id to get the cell position
         var rowNumber = parseInt(this.id.split("cell")[0].split("row")[1], 10);
         var cellNumber = parseInt(this.id.split("cell")[1], 10);

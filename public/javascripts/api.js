@@ -31,46 +31,51 @@ var API = function () {
             }
         }
     });
-}
+};
 
 /**
  * Register an event listener callback (will keep receiving messages)
  */
 API.prototype.on = function (event, callback) {
-    if (this.handlers[event] == null)
+    if (this.handlers[event] == null) {
         this.handlers[event] = [];
+    }
     this.handlers[event].push(callback);
-}
+};
 
 /**
  * Register an event listener callback for a single instance of the event
  */
 API.prototype.once = function (event, callback) {
-    if (this.onceHandlers[event] == null)
+    if (this.onceHandlers[event] == null) {
         this.onceHandlers[event] = [];
+    }
     this.onceHandlers[event].push(callback);
-}
+};
 
 /**
  * Register a new user
  */
 API.prototype.register = function (fullName, userName, password, callback) {
     // Do basic validation
-    if (fullName == null || fullName.length == 0)
+    if (fullName == null || fullName.length == 0) {
         return callback(createError("register", "Full name cannot be empty"));
-    if (userName == null || userName.length == 0)
+    }
+    if (userName == null || userName.length == 0) {
         return callback(createError("register", "User name cannot be empty"));
-    if (password == null || password.length == 0)
+    }
+    if (password == null || password.length == 0) {
         return callback(createError("register", "Password name cannot be empty"));
+    }
     // Register callback
     this.once("register", callback);
     // Fire message
     this.socket.emit("register", {
-        fullName: fullName
-        , userName: userName
-        , password: password
+        fullName: fullName,
+        userName: userName,
+        password: password
     });
-}
+};
 
 /**
  * Login a user
@@ -85,10 +90,10 @@ API.prototype.login = function (userName, password, callback) {
     this.once("login", callback);
     // Fire message
     this.socket.emit("login", {
-        userName: userName
-        , password: password
+        userName: userName,
+        password: password
     });
-}
+};
 
 /**
  * Find all available gamers that are active
@@ -96,7 +101,7 @@ API.prototype.login = function (userName, password, callback) {
 API.prototype.findAllAvailableGamers = function (callback) {
     this.once("findAllAvailableGamers", callback);
     this.socket.emit("findAllAvailableGamers", {});
-}
+};
 
 /**
  * Invite a gamer to a new game
@@ -104,7 +109,7 @@ API.prototype.findAllAvailableGamers = function (callback) {
 API.prototype.inviteGamer = function (gamer, callback) {
     this.once("inviteGamer", callback);
     this.socket.emit("inviteGamer", gamer);
-}
+};
 
 /**
  * Decline an invite to play a game
@@ -112,7 +117,7 @@ API.prototype.inviteGamer = function (gamer, callback) {
 API.prototype.declineGame = function (invite, callback) {
     this.once("declineGame", callback);
     this.socket.emit("declineGame", invite);
-}
+};
 
 /**
  * Accept an invite to play a game
@@ -120,7 +125,7 @@ API.prototype.declineGame = function (invite, callback) {
 API.prototype.acceptGame = function (invite, callback) {
     this.once("acceptGame", callback);
     this.socket.emit("acceptGame", invite);
-}
+};
 
 /**
  * Place a marker on a specific game at a specific location
@@ -132,7 +137,7 @@ API.prototype.placeMarker = function (gameId, x, y, callback) {
         , x: x
         , y: y
     });
-}
+};
 
 /**
  * Send a message to a specific gamer on a specific game
@@ -140,7 +145,7 @@ API.prototype.placeMarker = function (gameId, x, y, callback) {
 API.prototype.sendMessage = function (gameId, message, callback) {
     this.once("sendMessage", callback);
     this.socket.emit("sendMessage", {gameId: gameId, message: message});
-}
+};
 
 /**
  * Simple method to create a formated error message that fits the
@@ -148,9 +153,9 @@ API.prototype.sendMessage = function (gameId, message, callback) {
  */
 var createError = function (event, err) {
     return {
-        event: event
-        , ok: false
-        , isError: true
-        , error: err
-    }
-}
+        event: event,
+        ok: false,
+        isError: true,
+        error: err
+    };
+};
