@@ -34,13 +34,16 @@ var sessionStore = new express.session.MemoryStore();
 var initialize = function (callback) {
     // log every request to the console
     app.use(express.logger('dev'))
-       // have the ability to pull information from html in POST
-       .use(bodyParser())
-       .use(cookieParser())
-       // set the static files location /public/img will be /img for users
-       .use(express.static(__dirname + '/public'))
-       .use(express.errorHandler({dumpExceptions: true, showStack: true}))
-       .use(cookieSession({
+        // have the ability to pull information from html in POST
+        .use(bodyParser.json())
+        .use(bodyParser.urlencoded({
+            extended: true
+        }))
+        .use(cookieParser())
+        // set the static files location /public/img will be /img for users
+        .use(express.static(__dirname + '/public'))
+        .use(express.errorHandler({dumpExceptions: true, showStack: true}))
+        .use(cookieSession({
             key: 'sid',
             secret: SESSION_SECRET,
             store: sessionStore
@@ -59,7 +62,7 @@ var initialize = function (callback) {
             data.sessionID = data.cookie['sid'];
             // Set the user as authenticated in on the express session
             if (sessionStore.sessions[data.sessionID] == null) {
-                sessionStore.sessions[data.sessionID] = {}
+                sessionStore.sessions[data.sessionID] = {};
             }
         } else {
             // if there isn't, turn down the connection with a message
