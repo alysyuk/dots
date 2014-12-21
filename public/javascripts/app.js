@@ -57,9 +57,9 @@ api.on('gameMove', function (err, data) {
         cellIdImage = "#row" + y + "cell" + x + " img";
     // It was our turn, let's show the mark we set down
     if (marker == 'x') {
-        $(cellIdImage).attr("src", "/img/cross.png");
+        $(cellIdImage).attr("src", "/img/cross_1.png");
     } else {
-        $(cellIdImage).attr("src", "/img/circle.png");
+        $(cellIdImage).attr("src", "/img/circle_1.png");
     }
 });
 
@@ -72,7 +72,7 @@ api.on('gameOver', function (err, data) {
     } else if (data.winner == applicationState.sessionId) {
         generalBoxShow("Congratulations", "<p>You won</p>");
     } else {
-        generalBoxShow("You lost", "<p>You got beaten buddy</p>");
+        generalBoxShow("You lost", "<p>Sorry, not your day</p>");
     }
 
     // Let's load the first 100 public available games
@@ -394,9 +394,9 @@ var gameBoardCellHandler = function (applicationState, api, templateHandler, gam
             }
 
             if (data.marker == 'x') {
-                $(cellIdImage).attr("src", "/img/cross.png");
+                $(cellIdImage).attr("src", "/img/cross_1.png");
             } else {
-                $(cellIdImage).attr("src", "/img/circle.png");
+                $(cellIdImage).attr("src", "/img/circle_1.png");
             }
         });
     }

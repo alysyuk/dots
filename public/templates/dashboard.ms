@@ -19,6 +19,6 @@
 <div class="span4">
   <h2>The Dashboard</h2>
   <p>
-    The list on the left side shows all the active players (connected via socket.io) and lets you challenge one of them to a game. Click on the play link to give it a go.
+    The list on the left side shows all active players (connected via socket.io) and lets you challenge one of them to a game. Click on the play link to give it a go.
   </p>
 </div>
