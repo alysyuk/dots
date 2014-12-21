@@ -9,10 +9,10 @@ var api = new API();
 // Create a template handler with all the templates
 // used in the application
 var templateHandler = new TemplateHandler({
-    "main": "/templates/main.ms"
-    , "dashboard": "/templates/dashboard.ms"
-    , "board": "/templates/board.ms"
-    , "declineGame": "/templates/declineGame.ms"
+    "main": "/templates/main.ms",
+    "dashboard": "/templates/dashboard.ms",
+    "board": "/templates/board.ms",
+    "declineGame": "/templates/declineGame.ms"
 });
 
 // Load all the templates and once it's done
@@ -46,14 +46,15 @@ api.on("init", function (err, data) {
  * The opponent made a valid move, render the move on the board
  */
 api.on('gameMove', function (err, data) {
-    if (err)
+    if (err) {
         return;
+    }
     // Get the move data
-    var marker = data.marker;
-    var y = data.y;
-    var x = data.x;
-    // Select the right box and mark it
-    var cellIdImage = "#row" + y + "cell" + x + " img";
+    var marker = data.marker,
+        y = data.y,
+        x = data.x,
+        // Select the right box and mark it
+        cellIdImage = "#row" + y + "cell" + x + " img";
     // It was our turn, let's show the mark we set down
     if (marker == 'x') {
         $(cellIdImage).attr("src", "/img/cross.png");
@@ -76,8 +77,9 @@ api.on('gameOver', function (err, data) {
 
     // Let's load the first 100 public available games
     api.findAllAvailableGamers(function (err, gamers) {
-        if (err)
+        if (err) {
             return errorBoxShow(err.error);
+        }
 
         // Save the list of games in our game state
         applicationState.gamers = gamers;
@@ -94,8 +96,9 @@ api.on('gameOver', function (err, data) {
  * The user was invited to play a game, show the invitation acceptance / decline box
  */
 api.on('gameInvite', function (err, data) {
-    if (data == null)
+    if (data == null) {
         return;
+    }
     // Save the invitation in our application state
     applicationState.invite = data;
     // Open the invite box
@@ -106,8 +109,9 @@ api.on('gameInvite', function (err, data) {
  * The other player sent a message, render the message in the chat box
  */
 api.on('chatMessage', function (err, data) {
-    if (err)
+    if (err) {
         return;
+    }
     // Get the message
     var message = data.message;
     // Get the chat window  
@@ -121,13 +125,15 @@ api.on('chatMessage', function (err, data) {
  * to play
  */
 api.on('gamerJoined', function (err, data) {
-    if (err)
+    if (err) {
         return;
+    }
     // Get the gamer
     var gamer = data;
     // Check if we have the gamer already
-    if (applicationState.gamers == null)
+    if (applicationState.gamers == null) {
         return;
+    }
     // Check if the gamer already exists and if it does 
     var found = false;
 
@@ -145,8 +151,9 @@ api.on('gamerJoined', function (err, data) {
     }
 
     // If not found let's add it to the list
-    if (!found)
+    if (!found) {
         applicationState.gamers.push(gamer);
+    }
     // If we currently have the dashboard
     if (templateHandler.isTemplate("dashboard")) {
         var gamers = applicationState.gamers;
@@ -168,21 +175,23 @@ api.on('gamerJoined', function (err, data) {
 var registerButtonHandler = function (applicationState, api, templateHandler) {
     return function () {
         // Lets get the values for the registration
-        var fullName = $('#inputFullNameRegister').val();
-        var userName = $('#inputUserNameRegister').val();
-        var password = $('#inputPasswordRegister').val();
+        var fullName = $('#inputFullNameRegister').val(),
+            userName = $('#inputUserNameRegister').val(),
+            password = $('#inputPasswordRegister').val();
 
         // Attempt to register a new user
         api.register(fullName, userName, password, function (err, data) {
             // If we have an error show the error message to the user
-            if (err)
+            if (err) {
                 return errorBoxShow(err.error);
+            }
 
             // Load all the available gamers
             api.findAllAvailableGamers(function (err, gamers) {
                 // If we have an error show the error message to the user        
-                if (err)
+                if (err) {
                     return errorBoxShow(err.error);
+                }
 
                 // Save the list of games in our game state
                 applicationState.gamers = gamers;
@@ -205,20 +214,22 @@ var registerButtonHandler = function (applicationState, api, templateHandler) {
 var loginButtonHandler = function (applicationState, api, templateHandler) {
     return function () {
         // Lets get the values for the login
-        var userName = $('#inputUserNameLogin').val();
-        var password = $('#inputPasswordLogin').val();
+        var userName = $('#inputUserNameLogin').val(),
+            password = $('#inputPasswordLogin').val();
 
         // Attempt to login the user
         api.login(userName, password, function (err, data) {
             // If we have an error show the error message to the user
-            if (err)
+            if (err) {
                 return errorBoxShow(err.error);
+            }
 
             // Load all the available gamers
             api.findAllAvailableGamers(function (err, gamers) {
                 // If we have an error show the error message to the user        
-                if (err)
+                if (err) {
                     return errorBoxShow(err.error);
+                }
 
                 // Save the list of games in our game state
                 applicationState.gamers = gamers;
@@ -240,9 +251,8 @@ var loginButtonHandler = function (applicationState, api, templateHandler) {
  */
 var inviteGamerButtonHandler = function (applicationState, api, templateHandler) {
     return function (element) {
-        var gamer_id = element.currentTarget.id;
-        // Get the id
-        var id = gamer_id.split(/\_/)[1];
+        var gamer_id = element.currentTarget.id,
+            id = gamer_id.split(/\_/)[1];
 
         // Locate the gamer object
         for (var i = 0; i < applicationState.gamers.length; i++) {
@@ -252,8 +262,9 @@ var inviteGamerButtonHandler = function (applicationState, api, templateHandler)
                 // Attempt to invite the gamer to play
                 api.inviteGamer(gamer, function (err, game) {
                     // If we have an error show the declined game to the user
-                    if (err)
+                    if (err) {
                         return decline_box_show(templateHandler, gamer);
+                    }
 
                     // Set up the board for a game
                     setupBoardGame(applicationState, api, templateHandler, game);
@@ -271,8 +282,9 @@ var inviteAcceptButtonHandler = function (applicationState, api, templateHandler
         // Accept the game invite
         api.acceptGame(applicationState.invite, function (err, game) {
             // If we have an error show the error message to the user        
-            if (err)
+            if (err) {
                 return errorBoxShow(err.error);
+            }
 
             // Set up the board for a game
             setupBoardGame(applicationState, api, templateHandler, game);
@@ -288,8 +300,9 @@ var inviteDeclineButtonHandler = function (applicationState, api, templateHandle
         // Decline the game invite
         api.declineGame(applicationState.invite, function (err, result) {
             // If we have an error show the error message to the user        
-            if (err)
+            if (err) {
                 return errorBoxShow(err.error);
+            }
             // No need to do anything as we declined the game and we are still showing the dashboard
         });
     }
@@ -335,14 +348,16 @@ var chatHandler = function (applicationState, api, templateHandler, game) {
             var chatWindow = $('#chat');
             // Fetch the message the user entered
             var message = chatInput.val();
-            if (applicationState.game == null)
+            if (applicationState.game == null) {
                 return;
+            }
 
             // Send the message to the other player
             api.sendMessage(applicationState.game._id, message, function (err, data) {
                 // If we have an error show the error message to the user        
-                if (err)
+                if (err) {
                     return errorBoxShow(err.error);
+                }
 
                 // Push the current message to the bottom
                 chatWindow.append('<p class="chat_msg_current">' + getDateTimeString() + '&#62; ' + message + "</p>");
@@ -360,15 +375,16 @@ var chatHandler = function (applicationState, api, templateHandler, game) {
 var gameBoardCellHandler = function (applicationState, api, templateHandler, game) {
     return function () {
         // Split up the id to get the cell position
-        var rowNumber = parseInt(this.id.split("cell")[0].split("row")[1], 10);
-        var cellNumber = parseInt(this.id.split("cell")[1], 10);
-        var cellId = this.id;
-        var cellIdImage = "#" + cellId + " img";
+        var rowNumber = parseInt(this.id.split("cell")[0].split("row")[1], 10),
+            cellNumber = parseInt(this.id.split("cell")[1], 10),
+            cellId = this.id,
+            cellIdImage = "#" + cellId + " img";
 
         // Let's attempt to do a move
         api.placeMarker(applicationState.game._id, cellNumber, rowNumber, function (err, data) {
-            if (err)
+            if (err) {
                 return errorBoxShow(err.error);
+            }
 
             // If we won
             if (data.winner != null && data.winner == applicationState.sessionId) {
@@ -394,8 +410,8 @@ var gameBoardCellHandler = function (applicationState, api, templateHandler, gam
  * Get a date time string
  */
 var getDateTimeString = function () {
-    var date = new Date();
-    var string = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+    var date = new Date(),
+        string = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
     string += ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
     string += ":" + (date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds());
     return string;

@@ -43,7 +43,7 @@ var initialize = function (callback) {
         // set the static files location /public/img will be /img for users
         .use(express.static(__dirname + '/public'))
         .use(express.errorHandler({dumpExceptions: true, showStack: true}))
-        .use(cookieSession({
+        .use(express.session({
             key: 'sid',
             secret: SESSION_SECRET,
             store: sessionStore
@@ -62,7 +62,7 @@ var initialize = function (callback) {
             data.sessionID = data.cookie['sid'];
             // Set the user as authenticated in on the express session
             if (sessionStore.sessions[data.sessionID] == null) {
-                sessionStore.sessions[data.sessionID] = {};
+                sessionStore.sessions[data.sessionID] = {}
             }
         } else {
             // if there isn't, turn down the connection with a message

@@ -1,42 +1,46 @@
 body {
-  padding-top: 60px;
-  padding-bottom: 40px;
+    padding-top: 60px;
+    padding-bottom: 40px;
 }
 
 .board {
-  margin-left:20px;
+    width: 480px;    
+    margin-left:20px;
+    background-color: #eee;
 }
 
 .board_row {
-  margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 
 .board_row span {
-  width: 80px;
-  margin-right: 5px;
-  background: url('img src="/img/board_background_img.png') no-repeat;
+    margin-right: -4px;
+}
+
+.board_row span img {
+    width: 80px;
 }
 
 #chat p {
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
 #chat {
-  border: 1px solid gray;
-  height: 400px;
+    border: 1px solid gray;
+    height: 400px;
 }
 
 .chat_msg_other {
-  font-size: 14px;
-  margin-left: 5px;
-  margin-right: 5px;
-  color: red;
+    font-size: 14px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: red;
 }
 
 .chat_msg_current {
-  font-size: 14px;
-  margin-left: 5px;
-  margin-right: 5px;
-  color: blue;
+    font-size: 14px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: blue;
 }
